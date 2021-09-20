@@ -1,0 +1,15 @@
+apiVersion: v1 #Limits the types of objects that we want to create in a confg file
+                #Each api version defines a different set of objects we can use
+                # we have to check in documentatio wich api version embraces the object
+                #we want to create,. A POD by example, its in v1
+kind: Pod #Indicate the type of object we want to make
+metadata: #data about the pod
+  name: client-pod
+  labels:
+    component: web
+spec:
+  containers: #containers that will run inside our pod
+    - name: client
+      image: stephengrider/multi-client
+      ports:
+        - containerPort: 3000 # exposição de porta

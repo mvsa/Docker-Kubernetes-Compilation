@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service #Indicate the type of object we want to make
+metadata:
+  name: client-node-port
+spec:
+  type: NodePort
+  ports:
+    - port: 3050 # the port that another pod/object inside our application/cluster can use to access  our current application pod
+      targetPort: 3000  # reference to the port inside the pod that we are making the bridge (client-pod)
+      nodePort: 31515 # port that we will use to test (dev enviroment) inside our webbrowser/ has to be between 30000 - 32767
+  selector:
+    component: web # reference to the label component:web inside the client-pod config file
+                  # to make a bridge between the pod and the service
+                  # i can use any other key : value pair, as tier: frontend (has to be made in the two files)
+
+
+
+# Selector logic:
+#Im going to use my selector componet to fin every other object with a label of
+#component: web and expose its port 3000 to the outside world
