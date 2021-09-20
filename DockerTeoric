@@ -1,7 +1,0 @@
-Premissas: Facilitar processo de instalação/utilização de programas/serviços em qualquer dispositivo, encapsulando
-processos de instalação e configuração
-Docker é uma plataforma ou ecossistema focado na criação e execução de containers, que por sua vez representa uma instancia
-de uma imagem, e por ultimo uma imagem é um arquivo unico que contem todas as dependecias e configurações necessarias
-para rodar um determinado programas
-
-

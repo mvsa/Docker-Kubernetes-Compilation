@@ -1,0 +1,65 @@
+Premissas: Facilitar processo de instalação/utilização de programas/serviços em qualquer dispositivo, encapsulando
+processos de instalação e configuração
+Docker é uma plataforma ou ecossistema focado na criação e execução de containers, que por sua vez representa uma instancia
+de uma imagem, e por ultimo uma imagem é um arquivo unico que contem todas as dependecias e configurações necessarias
+para rodar um determinado programas
+
+Docker for windows é composto pelo Docker Client (Cli) e o Docker Server (Daemon) (responsável por criar imagens, rodar containers, uploads, etc)
+
+
+Instalação no windows obs:
+Important - A significant difference when using WSL2 is that you will need to create and run your project files from within the Linux filesystem, not the Windows filesystem. This will be very important in later lectures when we cover volumes.
+
+You can access your Linux system by running wsl in the Cortana bar. Going forward, all Docker commands should be run within WSL2 and not on the Windows file system.
+
+
+De forma mais tecnica consultar diagrama 15 para entendimento sobre containers
+E uma imagem pode ser vista como um snapshot de um determinado sistema de arquivos (diagrama 16)
+
+
+Docker está rodando sob uma VM Linux
+
+
+
+--------------------------------------------------------------------------
+Comandos:
+
+ - docker run <image name>   === docker create && docker start (by default docker start does not
+ outputs messages in the terminal (use -a flag to override this behaviour), but docker run does)
+
+ - docker run <imagem name> command! = Overides default command in an image startup, to be executed
+in the container after its created
+ex. docker run busybox ls : it will start the container and will print the container's internal files
+
+- docker ps = Lists local running containers
+- docker ps --al = show all containers that have been created (running or not)
+
+- docker system prune : delete stopped containers
+
+- docker log <container id> : Print all the information that have beeing emited from selected container
+
+- docker stop/kill <container id> 
+
+- docker exec -it <container_id> <command> : Execute additinal commando inside a running command
+
+- docker exec -it <container_id> sh : grant shell access to the container
+
+- (alternative less used) docker run -it <image name> sh : start a new container and get access to shell
+
+- 
+
+flags:
+
+ -a make docker watch for output from the container and print on the terminal
+
+ -it Allows us to type input to the running container
+
+ (-i: attach to standart in terminal, what i type will go to program Cli
+ -t: make sure that all the text comming in and out appear in a better formatting)
+
+
+
+
+
+obs:
+We cannot replace a default command in a already created container, even if it has been stopped
