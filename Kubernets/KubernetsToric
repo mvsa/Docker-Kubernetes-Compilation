@@ -1,0 +1,118 @@
+Facts:
+- Its a system for running many different containers over multiple different machines
+You use when you need to run many differrent containers with different images
+If an app have just one type of container, maybe kubernets will not be the best solution
+
+Developtment                     Production
+ minikube**                       Amazon elastic container service for kubernet (EKS) - managed solution
+                                Google Cloud Kubernets engine (GKE)  - managed solution
+                                Do it yourself
+
+
+**minikube creates a local kubernets cluster in our local machine
+Creates a VM that will run some number of containers, and to interact(manage) with the cluster
+we will use kubectl(locally and in prd)
+**UPDATE: we will be using docker desktop's built-in Kubernets instead of Minikube**
+
+
+Docker > Kubernets:
+
+Docker Compose: Each entry can get docker-compose to build an image
+Kubernets: Has no build pipeline, it expects all images to already be built *
+
+Docker Compose: Each entry representes a conainer we want to create
+Kubernetes: One config file per object we want to create **
+
+Docker Compose: Each entry defines the networking requirments (ports)
+Kubernetes: We have to manually set up all networking ***
+
+
+
+* Make sure our image is hosted on docker hub
+** make one config file to create the container (something to contain or represent the container)
+*** make one config file to set up networking
+
+
+Config Files (yaml):
+Used to create objects. Objects serve different purposes, like running a container, monitoring a container, setting up networking, etc.
+Examples of Object Types: StatefulSet,
+ ReplicaController,
+Pod = used to run a container,
+ Service = set up networking
+
+Object is a 'thing' that existis inside our kubernet's cluster
+
+kubectl is used to interpret the config files
+
+
+**NODE**
+A virtual machine running in a computer is called 'NODE'. that node will be used by kubernets to run some number of objects
+
+**POD**
+A pod is created and used inside a Node.
+A pod is a grouping of containers with an specific purpose
+In kubernets we dont create a simple container in a cluster, we cant run one single container by itself with no associated overhead, the small thing that we can deploy is
+a POD. Containers will be deployed within a pod 
+
+A pod has to have one or more containers inside of it
+In its core, his goal is to allow to group a set of containers that have a very similar purpose and very close relation, And have to be deplyed togeter in order to the application run.
+
+ex: A pod that is running 3 containers that are: Postegres, backup-manager and logger
+where a logger cant set anyting if de postgres is offile
+and the backup-manage cant do its job if the postgres is offline
+
+
+**SERVICE**
+we have to create a service if we want to be able to access anything inside a pod
+We use this object when we wanto to set up networking inside a kubernets cluster
+In services, we have 4 subtypes:
+ClusterIP
+NodePort = Exposes a container to the outside world (only good for dev purposes)
+LoadBalancer
+Ingress
+
+service Nodeport = comunnication bridge between the container running in a pod and the oustide world(web browser)
+
+we can have multiple services inside a node
+
+------------------------------------------------------------------------------------------------------
+Instalation:
+
+Install Kubectl - CLI for interacting with master (**Comes with built in docker desktop solution**)
+Install a VM dirver virtualbox - Used to make a VM that will be your single node (ignore with docker desktop)
+**Install minikube - Runs a single node on that vm
+
+Kubernets wont install VMs by default
+
+
+**UPDATE: we will be using docker desktop's built-in Kubernets instead of Minikube**
+**you will be using localhost to access the services running in your cluster instead of the minikube IP address.  ex: localhost:31515**
+
+---------------------------------------------------------------------------------------------------
+
+Commands:
+
+ - kubectl version
+ - kubectl cluster-info
+
+ - kubectl apply -f <filename path> 
+
+ - kubectl get pods = print status of entire group object (defined in third argument) types
+    kubectl get services
+-------------------------------------------------------------------------------------------------------
+
+Trivia
+Infra = gerenciamento de cluster
+Dev = fazer deploys
+
+Developer interact with kubernet cluster with its master
+
+It has automatic restarts? if a pod crashes?
+
+-------------------------------------------------------------------------------------
+order of execution:
+- Created client-node-port and client-pod yaml
+- kubectl apply -f <filename>  runned two times for each yaml file
+
+
+

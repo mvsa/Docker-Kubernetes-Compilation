@@ -19,7 +19,19 @@ E uma imagem pode ser vista como um snapshot de um determinado sistema de arquiv
 
 Docker está rodando sob uma VM Linux
 
+Diferentes containers com as mesmas dependencias instaladas possuem os dados isolados
+e não se comunicam, em caso de necessidade de escalar a aplicação ao inves de por exemplo
+existir N containers com Node + Redis a estrategia deve ser uma instancia e escalar esse servidor
+e fazer instancias adicionais desse servidor
 
+
+Docker Compose: CLI separada que vem instalada junto ao Docker.
+Usada para startar multiplos containers ao mesmo tempo.
+Automatiza processo de setup de imagens/containers
+
+
+Restart policies: {"no", always, on-failure, unless-stopped}
+exit status code other than 0 is a failure status
 
 --------------------------------------------------------------------------
 Comandos:
@@ -27,12 +39,19 @@ Comandos:
  - docker run <image name>   === docker create && docker start (by default docker start does not
  outputs messages in the terminal (use -a flag to override this behaviour), but docker run does)
 
+ - docker run -d <image_name> = start new container and execute it in background, giving us acces to
+ terminal again
+ 
+ -docker stop <container_id>
+
+  - docker images
+
  - docker run <imagem name> command! = Overides default command in an image startup, to be executed
 in the container after its created
 ex. docker run busybox ls : it will start the container and will print the container's internal files
 
 - docker ps = Lists local running containers
-- docker ps --al = show all containers that have been created (running or not)
+- docker ps --all = show all containers that have been created (running or not)
 
 - docker system prune : delete stopped containers
 
@@ -46,7 +65,26 @@ ex. docker run busybox ls : it will start the container and will print the conta
 
 - (alternative less used) docker run -it <image name> sh : start a new container and get access to shell
 
-- 
+- docker build . (inside a folder with dockerfile)
+
+- docker build -t <tag name for image> . // creates an alias for newly created image
+by convention the tag name can be written as follows:  dockerid/projectname:version  ex: mvsa22/redis:latest
+
+//port mapping
+- docker run -p 8080:8080 <imagename> 
+
+echo node_modules >> .dockerignore - adds node_modules to dockerignore file. If this file does not exisits
+it will create a new one.
+
+
+- * docker-compose up || down 
+-  docker-compose up --build  = tell docker compose to start to startup containers but build images again (to get updates)
+
+- * adding -d flag to the end of the up command, it will grant us access to terminal and run images in background
+
+- docker-compose ps = show status of current linked containers from docker compose
+
+---------------------------------------------------------------------------
 
 flags:
 
@@ -56,10 +94,21 @@ flags:
 
  (-i: attach to standart in terminal, what i type will go to program Cli
  -t: make sure that all the text comming in and out appear in a better formatting)
-
+ - d: runs container in backgroud and gives us back to terminal
 
 
 
 
 obs:
 We cannot replace a default command in a already created container, even if it has been stopped
+
+-----------------------------------------------------------------------------
+
+DockerFile:
+Consists  in three tasks: 1 - Specify a base image/ 2 - Run some commands to
+install additional programs/ 3-Specify a command to run on container setup
+
+Put new changes in docker file as far down as possible, to make sure previous
+commands use cache
+
+COPY localContext ContainerContext

@@ -2,7 +2,9 @@ Curso de Docker & Kubernets
 
 Temas abordados:
 
-* Docker
+* Docker: {Comandos Básicos, Criação/Gestão de imagens, Compose, Restart Policies}
+
+* Kubernets: {}
 
  - Curso em andamento, código será atualizado constantemente
 
