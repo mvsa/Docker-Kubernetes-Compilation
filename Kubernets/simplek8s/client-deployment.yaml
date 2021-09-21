@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-deployment
+spec:
+  replicas: 1 # number of different pods that this depyment will create
+  selector: # handle to reference the newly created pods
+    matchLabels:
+      component: web # this selector **
+  template: # configuration that will be used in every single pod created by this deployment
+    metadata:
+      labels:
+        component: web # ** refences this
+    spec:
+      containers:
+        - name: client
+          image: stephengrider/multi-client
+          ports:
+            - containerPort: 3000 # porta que o nginx dentro dessa imagem vai escutar

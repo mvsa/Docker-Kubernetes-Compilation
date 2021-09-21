@@ -1,0 +1,38 @@
+docker-compose up
+Original Files/folders deleted: travis.yml / docker-compose / dockerrun.aws / ./nginx
+Folder k8s created to house all kubenets configs
+created multi client config
+created clusterIp service attached to multi clients
+created multi server (express) config
+created clusterIp service attached to multi server
+created multi worker config file
+created redis config file and its service
+created postgres config file and its service
+--------------------------------------------------------------------------------------
+This is a multi container application that originally was running on elastic beanstalk and will be converted to
+kubernetes (1 config file for each object = total of 11)
+
+
+---------------------------------------------------------------------------------------------------------------
+
+**ClusterIP Service**
+Exposes a set of pods to other objects in the cluster
+Allow that any other object inside our cluster to access the object that the clusterip is point out. Only internal
+not to the outside world
+
+In ex, if a deployment has a clusterIP atached to it, this deployment can be accessed by any other object inside the cluster. Whitou it they will become unreachable
+
+
+**Ingress Service**
+Front door, traffic (outside world) will come to the ingress and then the deployments will be accessible
+
+-------------------------------------------------------------------------------------
+**COMMANDS**
+kubectl apply -f k8s   =  apply all config files from one directory
+kubectl logs <name of object>
+
+-------------------------------------------------------------------------------------------
+TRIVIA:
+Nginx server = routing inside application was replaced by ingress service
+
+rather than putting a separate file for each one of the objects we can create a single file to group different objects config, just copy and paste on the end of each config followed by a --- at the final line (not doing this in this project)

@@ -44,6 +44,37 @@ Object is a 'thing' that existis inside our kubernet's cluster
 
 kubectl is used to interpret the config files
 
+The name and kind properties are the unique identifier of an object, if we want to update an existing
+object change the infos in the config file, but leave the name and kind as it its, to the changes be replicated to the old object
+
+If we change the name, it will create a new object inside the cluster
+
+
+**DEPLOYMENT**
+when we uptade a config file we are only allowed to update some configs from images, not ports, name or containers
+to override this we will use a new type of object that will substitute pod/Services that will be
+Deployment (Object that maintains a set of identical pods, ensuring that they have the corret config and that the right number exists)
+
+
+Pod vs Deplyment:
+
+P: Runs a single set of containers
+D: Runs a set of identical pods (one or more)
+
+P: Good for one-off dev purposes
+D: Monitors the state of each pod, updating as necessary// and can also restart or recreate automaticly if necessary (crashes, etc)
+
+P: Rarely used directly in production (because of its limitations to update configs)
+D: Good for dev and Production
+
+Inside a deplyment has an pod template that dictates the specifcs of the pods inside, defining infos such as: quantity of containers, name, port, image.
+
+
+A deployment will create pods for us
+
+In a change in the config file,(ex: changing the containerPort) the deployment will delete old pods and create new ones
+
+
 
 **NODE**
 A virtual machine running in a computer is called 'NODE'. that node will be used by kubernets to run some number of objects
@@ -75,6 +106,11 @@ service Nodeport = comunnication bridge between the container running in a pod a
 
 we can have multiple services inside a node
 
+
+every pod created has its own ip (internal to the VM)
+if we restart or  recreated a pod, normally that internal IP is changed, and we would have to manually change in the request. In this contexto Services is going to watch every pod that matches its selector and automatically route
+traffic to available pod, and will encapsulate that IP reference
+
 ------------------------------------------------------------------------------------------------------
 Instalation:
 
@@ -98,21 +134,74 @@ Commands:
  - kubectl apply -f <filename path> 
 
  - kubectl get pods = print status of entire group object (defined in third argument) types
-    kubectl get services
+    kubectl get services / deployments
+
+- kubectl describe <object type> <object name> - get detailed information about an object
+
+- kubectl delete -f <config file> - remove an object (imperative update)
+ - kubectl delete deployment/services <deployment name>
+
+- kubectl get pods -o wide - tras lista de pods e algumas informações adicionais
+
+-kubectl set image <object_type>/<object_name> <container_name> = <new image to use> = update image version from existing pods
+    ex: kubectl set image  deployment/client-deployment client=mvsa22/imagem:v2
+
+- kubectl logs <name of object>
+
 -------------------------------------------------------------------------------------------------------
 
 Trivia
+we cant use env variables inside kubernets config files (?)
 Infra = gerenciamento de cluster
 Dev = fazer deploys
 
 Developer interact with kubernet cluster with its master
 
-It has automatic restarts? if a pod crashes?
+The pods automatically restarts its containers
+The master is constantly watching each of the nodes in order to capture some inconsistencies. When a container have a problem the master issues a restart/new copy
+
+the deployment file goes to the master and the master directs the instructions to the nodes
+
+
+Kubernets is a system to deploy containerized apps
+Nodes are individual machines (or vms) that run containers
+Masters are machines (or vms) whith a set of programs to manage nodes
+Kubernets didint build or images - it got them from somewhere else (docker hub)
+Kubernets (the master) decided where to run each container - each node can run a
+    dissimilar set of containers
+To deploy something, we update the desired state of the master with a confile file
+The master works constantly to meet your desired sate (always watching changes)    
+
+
+
+Deployments can be made with a Imperative style or Declarative
+
+Imperative: Do exactly these steps to arrive at this container setup (more technically costly )
+Declarative: Our container setup should look like this, make it happen (changing config file)
+
+
+
+
+
+In order to update our deployment if a image has been uptaded in dockerHub
+we cant just rerun the deployment file, because kubctl will point that no changes (in the file) were made
+
+options to uptade the pods:
+-Delete manually in order to them get restarted (with latest version) = not good
+-tag our images with version numbers and specifiy that version in config file. ex mvsa/api:v2 = adds extra steps (update source image, change config file)
+-use imperative commando to update the image version that the deployment should use = we will still need to tag our versions (we will use this)
+
+kubectl set image <object_type>/<object_name> <container_name> = <new image to use>
+
+
+
 
 -------------------------------------------------------------------------------------
 order of execution:
 - Created client-node-port and client-pod yaml
 - kubectl apply -f <filename>  runned two times for each yaml file
-
+- changed the image of client-pod
+- created a new config file for deployment
+- increase replica number of deployment
 
 
