@@ -135,7 +135,7 @@ Commands:
  - kubectl apply -f <filename path> 
 
  - kubectl get pods = print status of entire group object (defined in third argument) types
-    kubectl get services / deployments / pv / pvc / secrets
+    kubectl get services / deployments / pv / pvc / secrets/ ingress
 
 - kubectl describe <object type> <object name> - get detailed information about an object
 
