@@ -17,7 +17,12 @@ spec:
       containers:
         - name: worker
           image: stephengrider/multi-worker
+          env:
+            - name: REDIS_HOST
+              value: redis-cluster-ip-service #NAME OF THe service, acts like a host address
+            - name: REDIS_PORT
+              value: '6379'
 
-#becuse there isn't another object that need to direct connect to this worker to get an information it will not
+#because there isn't another object that need to direct connect to this worker to get an information it will not
 #have an service. The multiworker will connect to something else(redis ClusterIp Service),
 # and not the other way around

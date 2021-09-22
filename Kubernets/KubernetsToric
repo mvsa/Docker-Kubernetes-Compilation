@@ -39,6 +39,7 @@ Examples of Object Types: StatefulSet,
  ReplicaController,
 Pod = used to run a container,
  Service = set up networking
+ Secret
 
 Object is a 'thing' that existis inside our kubernet's cluster
 
@@ -134,7 +135,7 @@ Commands:
  - kubectl apply -f <filename path> 
 
  - kubectl get pods = print status of entire group object (defined in third argument) types
-    kubectl get services / deployments
+    kubectl get services / deployments / pv / pvc / secrets
 
 - kubectl describe <object type> <object name> - get detailed information about an object
 
@@ -151,7 +152,8 @@ Commands:
 -------------------------------------------------------------------------------------------------------
 
 Trivia
-we cant use env variables inside kubernets config files (?)
+- yaml array
+we cant use external env variables inside kubernets config files 
 Infra = gerenciamento de cluster
 Dev = fazer deploys
 
