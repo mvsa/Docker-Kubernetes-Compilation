@@ -62,6 +62,7 @@ ex. docker run busybox ls : it will start the container and will print the conta
 - docker exec -it <container_id> <command> : Execute additinal commando inside a running command
 
 - docker exec -it <container_id> sh : grant shell access to the container
+redis-cli
 
 - (alternative less used) docker run -it <image name> sh : start a new container and get access to shell
 
@@ -112,3 +113,8 @@ Put new changes in docker file as far down as possible, to make sure previous
 commands use cache
 
 COPY localContext ContainerContext
+
+==========
+
+REDIS:
+KEYS '*'  = return all keys
