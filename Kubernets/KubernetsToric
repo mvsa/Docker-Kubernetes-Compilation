@@ -109,7 +109,7 @@ we can have multiple services inside a node
 
 
 every pod created has its own ip (internal to the VM)
-if we restart or  recreated a pod, normally that internal IP is changed, and we would have to manually change in the request. In this contexto Services is going to watch every pod that matches its selector and automatically route
+if we restart or  recreated a pod, normally that internal IP is changed, and we would have to manually change in the request. In this context Services is going to watch every pod that matches its selector and automatically route
 traffic to available pod, and will encapsulate that IP reference
 
 ------------------------------------------------------------------------------------------------------
@@ -148,6 +148,10 @@ Commands:
     ex: kubectl set image  deployment/client-deployment client=mvsa22/imagem:v2
 
 - kubectl logs <name of object>
+
+- kubectl rollout restart deployment <deployment name>
+- A rolling restart will be used to restart each pod in order from deployment. This is the most recommended strategy because it will not cause a service break. Write the below-affixed command in the terminal.
+
 
 -------------------------------------------------------------------------------------------------------
 
