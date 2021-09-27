@@ -112,6 +112,10 @@ every pod created has its own ip (internal to the VM)
 if we restart or  recreated a pod, normally that internal IP is changed, and we would have to manually change in the request. In this context Services is going to watch every pod that matches its selector and automatically route
 traffic to available pod, and will encapsulate that IP reference
 
+
+**CONFIG MAP**
+define enviroment variable used by images
+
 ------------------------------------------------------------------------------------------------------
 Instalation:
 
