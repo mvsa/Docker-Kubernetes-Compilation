@@ -207,15 +207,3 @@ order of execution:
 - increase replica number of deployment
 
 
----------------------------------------------------------------------------------------
-Process of deploy:
-Create github repo >
-Tie repo to Travis CL
-Create Google Cloud Project
-Enable billing *
-add deployment scripts
-
-*Google cloud cost calculator  = kubernets engine = 3 nodes = standart = 1 persist disk 2gb
-load balance 1 forwarding rule > 100 mbnetword traffic proccedd :
-cost: 42 dolar per month
-1,40 cents a day
